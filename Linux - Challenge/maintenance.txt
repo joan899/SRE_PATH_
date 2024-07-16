@@ -1,0 +1,29 @@
+Ign:1 cdrom://Ubuntu 24.04 LTS _Noble Numbat_ - Release amd64 (20240424) noble InRelease
+Hit:2 cdrom://Ubuntu 24.04 LTS _Noble Numbat_ - Release amd64 (20240424) noble Release
+Hit:4 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:6 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:7 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists...
+Building dependency tree...
+Reading state information...
+243 packages can be upgraded. Run 'apt list --upgradable' to see them.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+0 upgraded, 0 newly installed, 0 to remove and 243 not upgraded.
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           982M  1.9M  980M   1% /run
+/dev/sr0        5.7G  5.7G     0 100% /cdrom
+/cow            4.8G  472M  4.4G  10% /
+tmpfs           4.8G  8.0K  4.8G   1% /dev/shm
+tmpfs           5.0M  8.0K  5.0M   1% /run/lock
+tmpfs           4.8G  572K  4.8G   1% /tmp
+tmpfs           982M  160K  982M   1% /run/user/1000
+ubuntu ubuntu
+    PID COMMAND         %CPU
+   8993 ps               100
+   6256 firefox          2.3
+   7099 Isolated Web Co  1.5
+   2153 gnome-shell      0.8
+   8619 tracker-extract  0.7
