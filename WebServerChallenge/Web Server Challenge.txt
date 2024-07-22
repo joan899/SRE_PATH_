@@ -1,0 +1,106 @@
+Hosting a React app in the nginx web server using vagrant:
+
+- We gotta install VirtualBox and vagrant, to install VB, you can run this command: 
+	sudo apt install virtualbox -y
+Then, you can install vagrant using these two commands:
+	1- wget https://releases.hashicorp.com/vagrant/2.3.7/vagrant_2.3.7-1_amd64.deb
+	2- sudo dpkg -i vagrant_2.3.7-1_amd64.deb
+	
+- We can create a folder to store the challenge using this command: 
+	mkdir ~/WebServerChallenge
+
+- Use cd to navigate to the created directory:
+	cd ~/WebServerChallenge
+	
+- Initialize the process with the init command:
+	vagrant init ubuntu/bionic64
+	
+- Modify the generated Vagrantfile in the WebServerChallenge folder in order to configure a private network with a specific IP:
+	nano Vagrantfile 
+
+- The Vagrantfile should have this configuration: 
+	# -*- mode: ruby -*-
+	# vi: set ft=ruby :
+
+	Vagrant.configure("2") do |config|
+	  config.vm.box = "ubuntu/bionic64"
+
+	  #Private network with specific IP
+	  config.vm.network "private_network", ip: "192.168.56.15"
+	end
+
+- Create the machine:
+	vagrant up 
+
+- Run the machine:
+	vagrant ssh
+
+- Install nginx: 
+	sudo apt-get update
+    sudo apt-get install -y nginx
+	
+- Install git
+	sudo apt install git
+	
+- Clone the repository: 
+	git clone https://github.com/falconcr/react-demo
+
+- Access to the app directory: 
+	cd react-demo
+
+- Install npm: 
+	sudo apt install npm
+	
+- Install the dependencies of the application:
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+	export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+	
+	nvm install 16
+	nvm use 16 
+	
+- Build the application: 
+	npm install react-scripts --save (This command makes sure there are scripts in the project to build)
+	npm run  build
+	
+- Configuring the web server:
+	sudo apt-get update
+	sudo apt-get install nginx
+	
+	Navigate to the nginx configuration directory: 
+		cd /etc/nginx/sites-available
+	
+	Creating a configurtion fiel for the React app:
+		sudo nano react-demo
+	
+	The server must have this config: 
+		server {
+			listen 80;
+			server_name 192.168.56.15;  
+
+			root /home/vagrant/react-demo/build;
+			index index.html;
+
+			location / {
+				try_files $uri $uri/ /index.html;
+			}
+		}
+
+	Create a symbolic link to enable the configuration:
+		sudo ln -s /etc/nginx/sites-available/react-demo /etc/nginx/sites-enabled/
+	
+	Restart the web server: 
+		sudo systemctl restart nginx
+
+	Now you can navigate to the react web app by the ip: 192.168.56.15
+	
+		
+	
+
+
+
+
+	
+	
+	
