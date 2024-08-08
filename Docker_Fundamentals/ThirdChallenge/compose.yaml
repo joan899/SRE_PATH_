@@ -1,0 +1,28 @@
+services:
+  frontend:
+    container_name: teemii-frontend
+    image: dokkaner/teemii-frontend:develop
+    ports:
+      - "8080:80"
+    networks: 
+      - teemii_network
+    depends_on:
+      - backend
+
+  backend:
+    container_name: teemii-backend
+    image: dokkaner/teemii-backend:develop
+    volumes:
+      - teemii_data:/data
+    networks: 
+      - teemii_network
+    expose:
+      - 3000
+
+networks:
+  teemii_network:
+    driver: bridge
+
+volumes:
+  teemii_data:
+    name: teemii_data
