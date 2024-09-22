@@ -98,7 +98,7 @@ Run this command
 ```kubectl expose deployment nginx-deployment-first -n namespace-1 --port=80 --target-port=80 --type=ClusterIP --dry-run=client -oyaml```
 
 Create a yaml file and copy and paste the result of the previous command in this yaml file:
-```nano nginx-deployment-first-svc.yaml``
+```nano nginx-deployment-first-svc.yaml```
 
 The yaml file must look like this:
 ```                                         
