@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx-first
+  name: nginx-first
+  namespace: namespace-1
+spec:
+  selector:
+    matchLabels:
+      app: nginx-first
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx-first
+    spec:
+      containers:
+      - image: nginx:1.26.2
+        imagePullPolicy: Always
+        name: nginx-first
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}
