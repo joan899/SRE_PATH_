@@ -3,17 +3,17 @@
 Goal: Two namespaces must be created, each with a deployment of 3 replicas. Each deployment should be exposed via a ClusterIP Service. Finally, it will demonstrate how to enable a Pod from Namespace X to communicate with a Pod from Namespace Y, explaining the commands used.
 
 ### Creating the required two namespaces
-kubectl create namespace namespace-1
-kubectl create namespace namespace-2
+```kubectl create namespace namespace-1```
+```kubectl create namespace namespace-2```
 
 Verify if the namespaces were created successfully: 
-: kubectl get namespaces
+```kubectl get namespaces```
 
 ### Create a deployments with 3 replicas in each namespace
 
-First deployment in the namespace ==namespace-1==
+First deployment in the namespace 'namespace-1':
 
-: Creating the yaml file, copy and paste the code below
+Creating the yaml file, copy and paste the code below
 
 ```nano deployment1.yaml```
 
@@ -46,15 +46,15 @@ spec:
         resources: {}
 status: {}
 ```
-: Applying the yaml file in order to create the deployment
+Applying the yaml file in order to create the deployment
 
 ```kubectl apply -f deployment1.yaml```
 
-: Check if the deployment and its pods were created 
+Check if the deployment and its pods were created 
 ```kubectl get pods -n namespace-1```
 
 
-: Creating the second deployment, copy and paste the code below
+Creating the second deployment, copy and paste the code below
 ```nano deployment2.yaml```
 
 ```
@@ -158,18 +158,18 @@ Check if the service was created:
 ### Communication Challenge
 
 It is time to test the communication between pods in the two different namespaces
-: In order to test the communication, execute this command to open a pod in the namespace-1 and communicate with a pod in the namespace-2 by the service
+- In order to test the communication, execute this command to open a pod in the namespace-1 and communicate with a pod in the namespace-2 by the service
 
 ```kubectl exec -it nginx-first-574d74f669-hk26z -n namespace-1 -- /bin/bash```
 
-: In the new shell, execute this command that will allow the communication, it is going to access to a pod in the namespace-2 by the ==nginx-second-svc== service.
+- In the new shell, execute this command that will allow the communication, it is going to access to a pod in the namespace-2 by the 'nginx-second-svc' service.
 
 ```curl http://nginx-second-svc.namespace-2```
 
-And the test can be done viceversa as well, from the ==namespace-2== to the ==namespace-1==:
+And the test can be done viceversa as well, from the 'namespace-2' to the 'namespace-1':
 ```kubectl exec -it nginx-second-132d74f669-ia12z -n namespace-2 -- /bin/bash```
 
-:run this command in the new shell:
+- run this command in the new shell:
 ```curl http://nginx-first-svc.namespace-1```
 
 ### Demonstrate the communication.
