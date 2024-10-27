@@ -23,7 +23,7 @@ Lastly, check that your profile is ready to be used, you will see the account id
 ### Creating the terraform plan.
 Open a terminal, and locate the folder where the tf files are placed. 
 Once you're in the right directory, run this command:
-```terraform init```
+```terraform init```.
 Then, to create the terraform plan:
 ```terraform plan```
 
