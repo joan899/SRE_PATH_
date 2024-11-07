@@ -1,0 +1,50 @@
+---
+- name: Install prerequisites
+  apt: 
+    name: "{{ item }}"
+    update_cache: yes
+    state: latest
+    force_apt_get: yes
+  loop: [ 'aptitude' ]
+
+- name: Install Apache
+  apt: 
+    name: apache2
+    update_cache: yes
+    state: latest
+
+- name: Create document root
+  file:
+    path: "/var/www/{{ site_title | lower | regex_replace(' ', '_') }}.com"
+    state: directory
+    owner: "www-data"
+    mode: '0755'
+
+- name: Copy index test page
+  template:
+    src: "index.html.j2"
+    dest: "/var/www/{{ site_title | lower | regex_replace(' ', '_') }}.com/index.html"
+  vars:
+    title: "{{ site_title }}"
+
+- name: Set up Apache virtual host
+  template:
+    src: "apache_config.j2"
+    dest: "/etc/apache2/sites-available/{{ site_title | lower | regex_replace(' ', '_') }}.com.conf"
+  vars:
+    port: "{{ apache_port }}"
+    server_name: "{{ site_title | lower | regex_replace(' ', '_') }}.com"
+
+- name: Enable new site
+  shell: "/usr/sbin/a2ensite {{ site_title | lower | regex_replace(' ', '_') }}.com.conf"
+  notify: Restart Apache
+
+- name: Disable default Apache site
+  shell: "/usr/sbin/a2dissite 000-default.conf"
+  notify: Restart Apache
+
+- name: "UFW - Allow HTTP on port {{ apache_port }}"
+  ufw:
+    rule: allow
+    port: "{{ apache_port }}"
+    proto: tcp

@@ -1,0 +1,9 @@
+---
+- name: Ansible challenge - Install Apache web server with a custom role
+  hosts: all
+  become: true
+  vars_files:
+    - "../roles/apache_install/vars/main.yml"
+
+  roles:
+    - apache_install
